@@ -1,0 +1,7 @@
+.todo-item{
+    display: flex;
+}
+
+.lineThrough{
+     text-decoration:line-through
+}
