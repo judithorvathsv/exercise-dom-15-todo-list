@@ -88,7 +88,7 @@ fieldset {
 
 hr {
   margin-top: 0.5rem;
-  border: 1px solid var(--middleGreen-color);
+  border: 0.5px solid var(--middleGreen-color);
 }
 
 #authorInput,

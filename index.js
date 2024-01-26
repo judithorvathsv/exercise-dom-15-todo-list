@@ -136,11 +136,11 @@ document
       if (span.classList.contains('notShow')) {
         span.classList.remove('notShow')
         span.classList.add('show')
-        document.getElementById('showTimeButton').innerText = 'Hide todo time'
+        document.getElementById('showTimeButton').innerText = 'Hide todo due time'
       } else {
         span.classList.add('notShow')
         span.classList.remove('show')
-        document.getElementById('showTimeButton').innerText = 'Show todo time'
+        document.getElementById('showTimeButton').innerText = 'Show todo due time'
       }
     }
   })
