@@ -8,6 +8,8 @@ const defaultTodos = [
   { author: 'Other', text: 'read the book', done: 'false' }
 ]
 
+const authors = ['Judit', 'All', 'Other']
+
 function createTodoItemAsHtml (todoItem) {
   let addedClass = ''
   if (todoItem.done == true) {
@@ -37,6 +39,19 @@ let htmlString = defaultTodosAsHtml.join('')
 let todoList = document.getElementById('todoSection')
 todoList.innerHTML = htmlString
 
+//Save author function----------------------------------------
+const authorForm = document.querySelector('#authorInputForm')
+authorForm.addEventListener('submit', function (e) {
+  e.preventDefault()
+  const newAuthor = e.target['author'].value
+  authors.push(newAuthor)
+  console.log(authors)
+  const newOption = document.createElement('option')
+  newOption.value = newAuthor
+  newOption.innerHTML = newAuthor
+  document.getElementById('userNames').appendChild(newOption)
+})
+
 //Choose user function----------------------------------------
 document.getElementById('userNames').addEventListener('change', function (e) {
   defaultTodosAsHtml = defaultTodos.map(todo => {
@@ -50,7 +65,7 @@ document.getElementById('userNames').addEventListener('change', function (e) {
 })
 
 //Adding item function----------------------------------------
-const form = document.querySelector('form')
+const form = document.querySelector('#todoInputForm')
 form.addEventListener('submit', function (e) {
   const user = document.getElementById('userNames')
   e.preventDefault()

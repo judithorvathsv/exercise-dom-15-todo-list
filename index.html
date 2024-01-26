@@ -15,15 +15,24 @@
 <body>
     <main>
         <h1>Todo List</h1>
-        <label for="userNames">Choose a user:</label>
-        <select name="user-names" id="userNames">
-            <option value="All">All user</option>
-            <option value="Judit">Judit</option>
-            <option value="Other">Other</option>
-        </select>
+        <section>
+            <label for="authorNames">Save author:</label>
+            <form id="authorInputForm">
+                <input type="text" name="author" id="authorInput">
+                <button type="submit" id="submitAuthorButton">skapa</button>
+            </form>
+        </section>
+        <section>
+            <label for="userNames">Choose a user:</label>
+            <select name="user-names" id="userNames">
+                <option value="All">All user</option>
+                <option value="Judit">Judit</option>
+                <option value="Other">Other</option>
+            </select>
+        </section>
 
         <section>
-            <form>
+            <form id="todoInputForm">
                 <input type="text" name="text" id="todoInput">
                 <button type="submit" id="submitButton">skapa</button>
             </form>
