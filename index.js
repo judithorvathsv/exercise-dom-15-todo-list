@@ -112,7 +112,7 @@ function doneItem (defaultTodos, textSpan) {
     defaultTodos.map(t => {
       if (t.text == textSpan.innerText) {
         let index = defaultTodos.indexOf(t)
-        if (index > 0) {
+        if (index >= 0) {
           t.done = false
         }
       }
@@ -122,7 +122,7 @@ function doneItem (defaultTodos, textSpan) {
     defaultTodos.map(t => {
       if (t.text == textSpan.innerText) {
         let index = defaultTodos.indexOf(t)
-        if (index > 0) {
+        if (index >= 0) {
           t.done = true
         }
       }
