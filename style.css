@@ -59,17 +59,6 @@ fieldset {
   display: block;
 }
 
-#showTimeButton {
-  padding: 0.2rem;
-  border: 1px solid var(--middleGreen-color);
-  background-color: var(--middleGreen-color);
-  color: white;
-}
-
-#timeButtonSection {
-  margin-top: 0.5rem;
-}
-
 #submitAuthorButton,
 #submitButton {
   padding: 0.5rem 1rem 0.5rem 1rem;
@@ -81,6 +70,7 @@ fieldset {
   color: white;
   border-radius: 3px;
 }
+
 #authorInput,
 #todoInput {
   padding: 0.5rem 1rem 0.5rem 1rem;
@@ -88,6 +78,13 @@ fieldset {
   font-optical-sizing: auto;
   border: 1px solid var(--middleGreen-color);
   border-radius: 3px;
+  width: 12rem;
+}
+
+#timeInput {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  margin-top: 0.5rem;
+  width: 12rem;
 }
 
 .action-icons {
@@ -106,4 +103,16 @@ fieldset {
   background-color: var(--middleGreen-color);
   color: white;
   border-radius: 3px;
+}
+
+#sortTodoByTime,
+#showTimeButton {
+  padding: 0.2rem;
+  border: 1px solid var(--middleGreen-color);
+  background-color: var(--middleGreen-color);
+  color: white;
+}
+
+#timeButtonSection {
+  margin-top: 0.5rem;
 }
