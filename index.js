@@ -3,43 +3,50 @@ const defaultTodos = [
     author: 'Judit',
     text: 'clean the bathroom',
     done: 'false',
-    created: '2024-01-26 15:08'
+    shouldBeDoneBy: '2024-01-26 15:08',
+    created: '2024-01-16 15:08'
   },
   {
     author: 'Judit',
     text: 'do the laundry',
     done: 'false',
-    created: '2024-01-25 15:08'
+    shouldBeDoneBy: '2024-01-25 15:08',
+    created: '2024-01-17 15:08'
   },
   {
     author: 'Judit',
     text: 'go programming',
     done: 'false',
-    created: '2024-01-21 15:08'
+    shouldBeDoneBy: '2024-01-21 15:08',
+    created: '2024-01-18 15:08'
   },
   {
     author: 'Judit',
     text: 'start the dishwasher',
     done: 'false',
-    created: '2024-01-22 15:08'
+    shouldBeDoneBy: '2024-01-22 15:08',
+    created: '2024-01-19 15:08'
   },
   {
     author: 'Judit',
     text: 'gymnastics',
     done: 'false',
-    created: '2024-01-20 15:08'
+    shouldBeDoneBy: '2024-01-20 15:08',
+    created: '2024-01-19 15:18'
   },
   {
     author: 'Judit',
     text: 'click attendance list',
     done: 'false',
-    created: '2024-01-26 11:09'
+    shouldBeDoneBy: '2024-01-26 11:09',
+    created: '2024-01-20 15:08'
   },
   {
     author: 'Other',
     text: 'read the book',
     done: 'false',
-    created: '2024-01-26 11:08'
+    shouldBeDoneBy: '2024-01-26 11:08',
+    created: '2024-01-20 15:10'
   }
 ]
 
@@ -56,7 +63,7 @@ function createTodoItemAsHtml (todoItem) {
     <article class='todo-item'>
         <div class='content'>
             <span class='text ${addedClass}'>${todoItem.text}</span>     
-            <span class='createdSpan notShow'>${todoItem.created}</span>       
+            <span class='shouldBeDoneTimeSpan notShow'>${todoItem.shouldBeDoneBy}</span>       
         </div>
         <div class='action-icons'>
             <span class='material-symbols-outlined upButton'>arrow_upward</span>
@@ -109,11 +116,10 @@ form.addEventListener('submit', function (e) {
   const newTodoItem = {
     author: user.value,
     text: e.target['text'].value,
+    shouldBeDoneBy: e.target['timeInput'].value,
     created: date_format(new Date())
   }
   defaultTodos.push(newTodoItem)
-  console.log(defaultTodos)
-
   const newTodoHtml = createTodoItemAsHtml(newTodoItem)
   todoList.insertAdjacentHTML('beforeend', newTodoHtml)
 })
@@ -122,7 +128,10 @@ form.addEventListener('submit', function (e) {
 document
   .getElementById('showTimeButton')
   .addEventListener('click', function (e) {
-    const todoCreatedSpan = document.getElementsByClassName('createdSpan')
+    const todoCreatedSpan = document.getElementsByClassName(
+      'shouldBeDoneTimeSpan'
+    )
+
     for (span of todoCreatedSpan) {
       if (span.classList.contains('notShow')) {
         span.classList.remove('notShow')
@@ -134,6 +143,56 @@ document
         document.getElementById('showTimeButton').innerText = 'Show todo time'
       }
     }
+  })
+
+function pad_2 (number) {
+  return (number < 10 ? '0' : '') + number
+}
+
+function hours (date) {
+  var hours = date.getHours()
+  return hours
+}
+
+function date_format (date) {
+  return (
+    date.getFullYear() +
+    '-' +
+    pad_2(date.getMonth() + 1) +
+    '-' +
+    pad_2(date.getDate()) +
+    ' ' +
+    pad_2(hours(date)) +
+    ':' +
+    pad_2(date.getMinutes())
+  )
+}
+
+//sort todo by time function---------------------------
+document
+  .getElementById('sortTodoByTime')
+  .addEventListener('click', function (e) {
+    let buttonLabel = document.getElementById('sortTodoByTime').innerText
+
+    if (buttonLabel == 'Sort todo by time') {
+      defaultTodos.sort(function (a, b) {
+        return new Date(a.shouldBeDoneBy) - new Date(b.shouldBeDoneBy)
+      })
+      document.getElementById('sortTodoByTime').innerText = 'Show original list'
+    } else {
+      defaultTodos.sort(function (a, b) {
+        return new Date(a.created) - new Date(b.created)
+      })
+      document.getElementById('sortTodoByTime').innerText = 'Sort todo by time'
+    }
+
+    defaultTodosAsHtml = defaultTodos.map(todo => {
+      return createTodoItemAsHtml(todo)
+    })
+
+    htmlString = defaultTodosAsHtml.join('')
+    todoList = document.getElementById('todoSection')
+    todoList.innerHTML = htmlString
   })
 
 function pad_2 (number) {

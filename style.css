@@ -21,7 +21,7 @@ body {
 main {
   padding: 2rem;
   width: fit-content;
-  height: 500px;
+  height: 700px;
   overflow-y: scroll;
   align-self: center;
   border: 1px solid var(--middleGreen-color);
