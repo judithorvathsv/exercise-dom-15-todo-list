@@ -43,6 +43,7 @@ h1 {
 
 fieldset {
   padding: 1rem;
+  border: 1px solid var(--middleGreen-color);
 }
 
 .todo-item {
