@@ -15,11 +15,11 @@
 <body>
     <main>
         <h1>Todo List</h1>
-        <section>
-            <label for="authorNames">Save author:</label>
+        <section id="saveAuthorSection">
+            <label for="authorNames">Save a user:</label>
             <form id="authorInputForm">
                 <input type="text" name="author" id="authorInput">
-                <button type="submit" id="submitAuthorButton">skapa</button>
+                <button type="submit" id="submitAuthorButton">Save</button>
             </form>
         </section>
         <section>
@@ -32,9 +32,10 @@
         </section>
 
         <section>
+            <label for="userNames">Add a todo to chosen user:</label>
             <form id="todoInputForm">
                 <input type="text" name="text" id="todoInput">
-                <button type="submit" id="submitButton">skapa</button>
+                <button type="submit" id="submitButton">Save</button>
             </form>
         </section>
 

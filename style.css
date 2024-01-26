@@ -47,22 +47,31 @@ h1 {
   justify-content: space-between;
 }
 
+#submitAuthorButton,
 #submitButton {
   padding: 0.5rem 1rem 0.5rem 1rem;
   font-family: "Manrope", sans-serif;
   font-optical-sizing: auto;
   font-weight: bold;
   border: 1px solid var(--middleGreen-color);
+  background-color: var(--middleGreen-color);
+  color: white;
+  border-radius: 3px;
 }
-
+#authorInput,
 #todoInput {
   padding: 0.5rem 1rem 0.5rem 1rem;
   font-family: "Manrope", sans-serif;
   font-optical-sizing: auto;
   border: 1px solid var(--middleGreen-color);
+  border-radius: 3px;
 }
 
 .action-icons {
   display: flex;
   align-self: flex-end;
+}
+
+#saveAuthorSection {
+  margin-bottom: 1rem;
 }
