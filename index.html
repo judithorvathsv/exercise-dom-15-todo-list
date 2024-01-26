@@ -22,9 +22,9 @@
                 <button type="submit" id="submitAuthorButton">Save</button>
             </form>
         </section>
+        <fieldset>
+            <section>
 
-        <section>
-            <fieldset>
                 <legend>Add new todo:</legend>
                 <label for="userNames">Choose a user:</label>
                 <select name="user-names" id="userNames">
@@ -35,20 +35,23 @@
                 <br>
 
 
-                <label for="userNames">Add a todo to chosen user:</label>
+                <label for="userNames">Add a todo to chosen user</label>
                 <form id="todoInputForm">
+                    <label class="todoInputLabel" for="todoInput">Todo:</label>
                     <input type="text" name="text" id="todoInput">
+                    <label class="todoInputLabel" for="timeInput">Due date:</label>
                     <input type="datetime-local" name="timeInput" id="timeInput">
                     <button type="submit" id="submitButton">Save</button>
                 </form>
-            </fieldset>
-        </section>
-        <section id="timeButtonSection">
-            <button id="showTimeButton">Show todo time</button>
-            <button id="sortTodoByTime">Sort todo by time</button>
-        </section>
+                <hr>
+            </section>
+            <section id="timeButtonSection">
+                <button id="showTimeButton">Show todo time</button>
+                <button id="sortTodoByTime">Sort todo by time</button>
+            </section>
 
-        <section id="todoSection" class="todo-list"></section>
+            <section id="todoSection" class="todo-list"></section>
+        </fieldset>
     </main>
     <script src="index.js"></script>
 </body>

@@ -46,6 +46,15 @@ fieldset {
   border: 1px solid var(--middleGreen-color);
 }
 
+#todoInputForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.todoInputLabel {
+  padding-top: 1rem;
+}
+
 .todo-item {
   display: flex;
   padding-top: 1rem;
@@ -70,6 +79,16 @@ fieldset {
   background-color: var(--middleGreen-color);
   color: white;
   border-radius: 3px;
+}
+
+#submitButton {
+  width: fit-content;
+  margin-top: 1rem;
+}
+
+hr {
+  margin-top: 0.5rem;
+  border: 1px solid var(--middleGreen-color);
 }
 
 #authorInput,
