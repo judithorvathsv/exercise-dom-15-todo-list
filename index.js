@@ -4,13 +4,9 @@ const defaultTodos = [
   { author: 'Judit', text: 'go programming', done: 'false' },
   { author: 'Judit', text: 'start the dishwasher', done: 'false' },
   { author: 'Judit', text: 'gymnastics', done: 'false' },
-  { author: 'Judit', text: 'click attendance list', done: 'false' }
+  { author: 'Judit', text: 'click attendance list', done: 'false' },
+  { author: 'Other', text: 'read the book', done: 'false' }
 ]
-
-/* document.getElementById('userNames').addEventListener('change', function (e) {
-  alert(e.target.value)
-}) */
-
 
 function createTodoItemAsHtml (todoItem) {
   let addedClass = ''
@@ -41,12 +37,25 @@ let htmlString = defaultTodosAsHtml.join('')
 let todoList = document.getElementById('todoSection')
 todoList.innerHTML = htmlString
 
+//Choose user function----------------------------------------
+document.getElementById('userNames').addEventListener('change', function (e) {
+  defaultTodosAsHtml = defaultTodos.map(todo => {
+    if (todo.author == e.target.value || e.target.value == 'All') {
+      return createTodoItemAsHtml(todo)
+    }
+  })
+  htmlString = defaultTodosAsHtml.join('')
+  todoList = document.getElementById('todoSection')
+  todoList.innerHTML = htmlString
+})
+
 //Adding item function----------------------------------------
 const form = document.querySelector('form')
 form.addEventListener('submit', function (e) {
+  const user = document.getElementById('userNames')
   e.preventDefault()
   const newTodoItem = {
-    author: 'Judit',
+    author: user.value,
     text: e.target['text'].value
   }
   defaultTodos.push(newTodoItem)
@@ -55,7 +64,7 @@ form.addEventListener('submit', function (e) {
   todoList.insertAdjacentHTML('beforeend', newTodoHtml)
 })
 
-//Removing + ready function----------------------------------------
+//Removing + ready moveup + move down functions-----------------
 
 function swap (arr, from, to) {
   arr.splice(from, 1, arr.splice(to, 1, arr[from])[0])
@@ -159,5 +168,3 @@ document
       moveDown(defaultTodos, textSpan)
     }
   })
-
-
