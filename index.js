@@ -7,6 +7,11 @@ const defaultTodos = [
   { author: 'Judit', text: 'click attendance list', done: 'false' }
 ]
 
+/* document.getElementById('userNames').addEventListener('change', function (e) {
+  alert(e.target.value)
+}) */
+
+
 function createTodoItemAsHtml (todoItem) {
   let addedClass = ''
   if (todoItem.done == true) {
@@ -154,3 +159,5 @@ document
       moveDown(defaultTodos, textSpan)
     }
   })
+
+

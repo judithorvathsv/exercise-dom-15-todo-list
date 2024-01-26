@@ -1,7 +1,68 @@
-.todo-item{
-    display: flex;
+:root {
+  --middleGreen-color: rgb(17, 142, 17);
 }
 
-.lineThrough{
-     text-decoration:line-through
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.lineThrough {
+  text-decoration: line-through;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+}
+
+main {
+  padding: 2rem;
+  width: fit-content;
+  height: 500px;
+  overflow-y: scroll;
+  align-self: center;
+  border: 1px solid var(--middleGreen-color);
+  background-color: #daf7a6;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+}
+
+h1 {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  color: var(--middleGreen-color);
+  padding-bottom: 1.5rem;
+}
+
+.todo-item {
+  display: flex;
+  padding-top: 1rem;
+  justify-content: space-between;
+}
+
+#submitButton {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  border: 1px solid var(--middleGreen-color);
+}
+
+#todoInput {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  border: 1px solid var(--middleGreen-color);
+}
+
+.action-icons {
+  display: flex;
+  align-self: flex-end;
 }
