@@ -51,6 +51,25 @@ fieldset {
   justify-content: space-between;
 }
 
+.notShow {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+#showTimeButton {
+  padding: 0.2rem;
+  border: 1px solid var(--middleGreen-color);
+  background-color: var(--middleGreen-color);
+  color: white;
+}
+
+#timeButtonSection {
+  margin-top: 0.5rem;
+}
+
 #submitAuthorButton,
 #submitButton {
   padding: 0.5rem 1rem 0.5rem 1rem;

@@ -1,11 +1,46 @@
 const defaultTodos = [
-  { author: 'Judit', text: 'clean the bathroom', done: 'false' },
-  { author: 'Judit', text: 'do the laundry', done: 'false' },
-  { author: 'Judit', text: 'go programming', done: 'false' },
-  { author: 'Judit', text: 'start the dishwasher', done: 'false' },
-  { author: 'Judit', text: 'gymnastics', done: 'false' },
-  { author: 'Judit', text: 'click attendance list', done: 'false' },
-  { author: 'Other', text: 'read the book', done: 'false' }
+  {
+    author: 'Judit',
+    text: 'clean the bathroom',
+    done: 'false',
+    created: '2024-01-26 15:08'
+  },
+  {
+    author: 'Judit',
+    text: 'do the laundry',
+    done: 'false',
+    created: '2024-01-25 15:08'
+  },
+  {
+    author: 'Judit',
+    text: 'go programming',
+    done: 'false',
+    created: '2024-01-21 15:08'
+  },
+  {
+    author: 'Judit',
+    text: 'start the dishwasher',
+    done: 'false',
+    created: '2024-01-22 15:08'
+  },
+  {
+    author: 'Judit',
+    text: 'gymnastics',
+    done: 'false',
+    created: '2024-01-20 15:08'
+  },
+  {
+    author: 'Judit',
+    text: 'click attendance list',
+    done: 'false',
+    created: '2024-01-26 11:09'
+  },
+  {
+    author: 'Other',
+    text: 'read the book',
+    done: 'false',
+    created: '2024-01-26 11:08'
+  }
 ]
 
 const authors = ['Judit', 'All', 'Other']
@@ -20,7 +55,8 @@ function createTodoItemAsHtml (todoItem) {
   return `
     <article class='todo-item'>
         <div class='content'>
-            <span class='text ${addedClass}'>${todoItem.text}</span>            
+            <span class='text ${addedClass}'>${todoItem.text}</span>     
+            <span class='createdSpan notShow'>${todoItem.created}</span>       
         </div>
         <div class='action-icons'>
             <span class='material-symbols-outlined upButton'>arrow_upward</span>
@@ -67,17 +103,61 @@ document.getElementById('userNames').addEventListener('change', function (e) {
 //Adding item function----------------------------------------
 const form = document.querySelector('#todoInputForm')
 form.addEventListener('submit', function (e) {
-  const user = document.getElementById('userNames')
   e.preventDefault()
+
+  const user = document.getElementById('userNames')
   const newTodoItem = {
     author: user.value,
-    text: e.target['text'].value
+    text: e.target['text'].value,
+    created: date_format(new Date())
   }
   defaultTodos.push(newTodoItem)
+  console.log(defaultTodos)
 
   const newTodoHtml = createTodoItemAsHtml(newTodoItem)
   todoList.insertAdjacentHTML('beforeend', newTodoHtml)
 })
+
+//Show time function----------------------------------------
+document
+  .getElementById('showTimeButton')
+  .addEventListener('click', function (e) {
+    const todoCreatedSpan = document.getElementsByClassName('createdSpan')
+    for (span of todoCreatedSpan) {
+      if (span.classList.contains('notShow')) {
+        span.classList.remove('notShow')
+        span.classList.add('show')
+        document.getElementById('showTimeButton').innerText = 'Hide todo time'
+      } else {
+        span.classList.add('notShow')
+        span.classList.remove('show')
+        document.getElementById('showTimeButton').innerText = 'Show todo time'
+      }
+    }
+  })
+
+function pad_2 (number) {
+  return (number < 10 ? '0' : '') + number
+}
+
+function hours (date) {
+  var hours = date.getHours()
+  return hours
+}
+
+function date_format (date) {
+  return (
+    date.getFullYear() +
+    '-' +
+    pad_2(date.getMonth() + 1) +
+    '-' +
+    pad_2(date.getDate()) +
+    ' ' +
+    pad_2(hours(date)) +
+    ':' +
+    pad_2(date.getMinutes())
+  )
+}
 
 //Removing + ready moveup + move down functions-----------------
 
