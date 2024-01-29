@@ -63,13 +63,15 @@ function createTodoItemAsHtml (todoItem) {
     <article class='todo-item'>
         <div class='content'>
             <span class='text ${addedClass}'>${todoItem.text}</span>     
-            <span class='shouldBeDoneTimeSpan notShow'>${todoItem.shouldBeDoneBy}</span>       
+            <span class='shouldBeDoneTimeSpan notShow'>${todoItem.shouldBeDoneBy}</span>  
+            <span hidden class='created '>${todoItem.created}</span>     
         </div>
         <div class='action-icons'>
             <span class='material-symbols-outlined upButton'>arrow_upward</span>
             <span class='material-symbols-outlined downButton'>arrow_downward</span>
             <span class='material-symbols-outlined deleteButton'>delete</span>
             <span class='material-symbols-outlined doneButton'>done</span>
+            <span class="material-symbols-outlined editButton">edit</span>
         </div>
     </article> `
 }
@@ -136,11 +138,13 @@ document
       if (span.classList.contains('notShow')) {
         span.classList.remove('notShow')
         span.classList.add('show')
-        document.getElementById('showTimeButton').innerText = 'Hide todo due time'
+        document.getElementById('showTimeButton').innerText =
+          'Hide todo due time'
       } else {
         span.classList.add('notShow')
         span.classList.remove('show')
-        document.getElementById('showTimeButton').innerText = 'Show todo due time'
+        document.getElementById('showTimeButton').innerText =
+          'Show todo due time'
       }
     }
   })
@@ -269,6 +273,35 @@ function doneItem (defaultTodos, textSpan) {
   }
 }
 
+//------------------------------------------------------------------------
+function editText (defaultTodos, textSpan, s) {
+  const parent = textSpan.parentNode
+  const text = parent.firstElementChild
+
+  if (s.innerText == 'edit') {
+    const inputChild = document.createElement('input')
+    parent.appendChild(inputChild)
+    parent.replaceChild(inputChild, text)
+    s.innerText = 'bookmark_added'
+  } else {
+    if (parent.firstElementChild.value.length > 0) {
+      const spanChild = document.createElement('span')
+      parent.appendChild(spanChild)
+      spanChild.innerText = text.value
+      spanChild.classList.add('text')
+      parent.replaceChild(spanChild, parent.firstElementChild)
+      s.innerText = 'edit'
+      const createdAt = parent.children[2].innerText
+
+      defaultTodos.map(t => {
+        if (t.created == createdAt) {
+          t.text = text.value
+        }
+      })
+    }
+  }
+}
+
 function moveUp (defaultTodos, textSpan) {
   defaultTodos.map(t => {
     if (t.text == textSpan.innerText) {
@@ -293,7 +326,6 @@ function moveDown (defaultTodos, textSpan) {
   })
   if (index < defaultTodos.length - 1) {
     swap(defaultTodos, index, index + 1)
-    console.log(defaultTodos)
     reWriteTodoList(defaultTodos)
   }
 }
@@ -320,5 +352,9 @@ document
 
     if (s.classList.contains('downButton')) {
       moveDown(defaultTodos, textSpan)
+    }
+
+    if (s.classList.contains('editButton')) {
+      editText(defaultTodos, textSpan, s)
     }
   })
