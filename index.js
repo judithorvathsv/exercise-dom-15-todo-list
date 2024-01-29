@@ -223,7 +223,6 @@ function date_format (date) {
 }
 
 //Removing + ready moveup + move down functions-----------------
-
 function swap (arr, from, to) {
   arr.splice(from, 1, arr.splice(to, 1, arr[from])[0])
 }
@@ -273,7 +272,6 @@ function doneItem (defaultTodos, textSpan) {
   }
 }
 
-//------------------------------------------------------------------------
 function editText (defaultTodos, textSpan, s) {
   const parent = textSpan.parentNode
   const text = parent.firstElementChild
