@@ -1,4 +1,4 @@
-const defaultTodos = [
+/* const todos = [
   {
     author: 'Judit',
     text: 'clean the bathroom',
@@ -48,9 +48,16 @@ const defaultTodos = [
     shouldBeDoneBy: '2024-01-26 11:08',
     created: '2024-01-20 15:10'
   }
-]
+] */
 
-const authors = ['Judit', 'All', 'Other']
+//const defaultAuthors = ['Judit', 'All', 'Other']
+
+let storedTodo = localStorage.getItem('defaultTodosStorage')
+let defaultTodos = JSON.parse(storedTodo)
+var allTodos = []
+let authors = localStorage.getItem('authors')
+var allAuthors = []
+let userStorage = localStorage.getItem('userStorage')
 
 function createTodoItemAsHtml (todoItem) {
   let addedClass = ''
@@ -76,21 +83,56 @@ function createTodoItemAsHtml (todoItem) {
     </article> `
 }
 
-let defaultTodosAsHtml = defaultTodos.map(todo => {
-  return createTodoItemAsHtml(todo)
-})
+if (defaultTodos !== null && defaultTodos.length > 0) {
+  if (userStorage == 'All') {
+    let defaultTodosAsHtml = defaultTodos.map(todo => {
+      return createTodoItemAsHtml(todo)
+    })
+    let htmlString = defaultTodosAsHtml.join('')
+    let todoList = document.getElementById('todoSection')
+    todoList.innerHTML = htmlString
+  } else {
+    let defaultTodosAsHtml = defaultTodos.map(todo => {
+      if (todo.author == userStorage) {
+        return createTodoItemAsHtml(todo)
+      }
+    })
+    let htmlString = defaultTodosAsHtml.join('')
+    let todoList = document.getElementById('todoSection')
+    todoList.innerHTML = htmlString
+  }
+}
 
-let htmlString = defaultTodosAsHtml.join('')
-let todoList = document.getElementById('todoSection')
-todoList.innerHTML = htmlString
+//Show authors in dropdown-----------------------------------
+if (authors !== null && authors.length > 0) {
+  let select = document.getElementById('userNames')
+  for (let oldAut of authors) {
+    if (oldAut != ',') {
+      let opt = document.createElement('option')
+      opt.value = oldAut
+      opt.innerHTML = oldAut
+      select.appendChild(opt)
+      if (opt.innerHTML == userStorage) {
+        opt.selected = 'selected'
+      }
+    }
+  }
+}
 
 //Save author function----------------------------------------
 const authorForm = document.querySelector('#authorInputForm')
 authorForm.addEventListener('submit', function (e) {
-  e.preventDefault()
   const newAuthor = e.target['author'].value
-  authors.push(newAuthor)
-  console.log(authors)
+
+  if (authors !== null && authors.length > 0) {
+    for (oldAuthor of authors) {
+      allAuthors.push(oldAuthor)
+    }
+  }
+
+  allAuthors.push(newAuthor)
+  localStorage.setItem('authors', allAuthors)
+
   const newOption = document.createElement('option')
   newOption.value = newAuthor
   newOption.innerHTML = newAuthor
@@ -98,32 +140,49 @@ authorForm.addEventListener('submit', function (e) {
 })
 
 //Choose user function----------------------------------------
-document.getElementById('userNames').addEventListener('change', function (e) {
-  defaultTodosAsHtml = defaultTodos.map(todo => {
-    if (todo.author == e.target.value || e.target.value == 'All') {
-      return createTodoItemAsHtml(todo)
-    }
+if (defaultTodos !== null && defaultTodos.length > 0) {
+  document.getElementById('userNames').addEventListener('change', function (e) {
+    defaultTodosAsHtml = defaultTodos.map(todo => {
+      if (todo.author == e.target.value || e.target.value == 'All') {
+        return createTodoItemAsHtml(todo)
+      }
+    })
+    htmlString = defaultTodosAsHtml.join('')
+    todoList = document.getElementById('todoSection')
+    todoList.innerHTML = htmlString
   })
-  htmlString = defaultTodosAsHtml.join('')
-  todoList = document.getElementById('todoSection')
-  todoList.innerHTML = htmlString
-})
+}
 
 //Adding item function----------------------------------------
 const form = document.querySelector('#todoInputForm')
 form.addEventListener('submit', function (e) {
-  e.preventDefault()
-
-  const user = document.getElementById('userNames')
+  user = document.getElementById('userNames')
   const newTodoItem = {
     author: user.value,
     text: e.target['text'].value,
     shouldBeDoneBy: e.target['timeInput'].value,
-    created: date_format(new Date())
+    created: new Date()
+
+    //created: date_format(new Date())
   }
-  defaultTodos.push(newTodoItem)
+  localStorage.setItem('userStorage', user.value)
+
+  if (storedTodo !== null && storedTodo.length > 0) {
+    for (oldTodos of defaultTodos) {
+      allTodos.push(oldTodos)
+    }
+  }
+  allTodos.push(newTodoItem)
+  localStorage.setItem('defaultTodosStorage', JSON.stringify(allTodos))
+
   const newTodoHtml = createTodoItemAsHtml(newTodoItem)
-  todoList.insertAdjacentHTML('beforeend', newTodoHtml)
+  if (defaultTodos !== null && defaultTodos.length > 0) {
+    todoList.insertAdjacentHTML('beforeend', newTodoHtml)
+  } else {
+    todoList = document.getElementById('todoSection')
+    todoList.innerHTML = newTodoHtml
+    document.getElementById('userNames').value = user
+  }
 })
 
 //Show time function----------------------------------------
@@ -246,6 +305,7 @@ function deleteItem (defaultTodos, textSpan, grandParent) {
     }
   })
   grandParent.parentNode.removeChild(grandParent)
+  localStorage.setItem('defaultTodosStorage', JSON.stringify(defaultTodos))
 }
 
 function doneItem (defaultTodos, textSpan) {
@@ -270,6 +330,7 @@ function doneItem (defaultTodos, textSpan) {
       }
     })
   }
+  localStorage.setItem('defaultTodosStorage', JSON.stringify(defaultTodos))
 }
 
 function editText (defaultTodos, textSpan, s) {
@@ -294,10 +355,12 @@ function editText (defaultTodos, textSpan, s) {
       defaultTodos.map(t => {
         if (t.created == createdAt) {
           t.text = text.value
+          console.log(t)
         }
       })
     }
   }
+  localStorage.setItem('defaultTodosStorage', JSON.stringify(defaultTodos))
 }
 
 function moveUp (defaultTodos, textSpan) {
@@ -313,6 +376,7 @@ function moveUp (defaultTodos, textSpan) {
       }
     }
   })
+  localStorage.setItem('defaultTodosStorage', JSON.stringify(defaultTodos))
 }
 
 function moveDown (defaultTodos, textSpan) {
@@ -326,6 +390,7 @@ function moveDown (defaultTodos, textSpan) {
     swap(defaultTodos, index, index + 1)
     reWriteTodoList(defaultTodos)
   }
+  localStorage.setItem('defaultTodosStorage', JSON.stringify(defaultTodos))
 }
 
 document
