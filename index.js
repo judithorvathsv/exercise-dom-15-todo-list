@@ -160,10 +160,8 @@ form.addEventListener('submit', function (e) {
   const newTodoItem = {
     author: user.value,
     text: e.target['text'].value,
-    shouldBeDoneBy: e.target['timeInput'].value,
+    shouldBeDoneBy: e.target['timeInput'].value.substring(0, 10),
     created: new Date()
-
-    //created: date_format(new Date())
   }
   localStorage.setItem('userStorage', user.value)
 
@@ -185,10 +183,12 @@ form.addEventListener('submit', function (e) {
   }
 })
 
+let dateIsShown = false
+
 //Show time function----------------------------------------
 document
   .getElementById('showTimeButton')
-  .addEventListener('click', function (e) {
+  .addEventListener('click', function () {
     const todoCreatedSpan = document.getElementsByClassName(
       'shouldBeDoneTimeSpan'
     )
@@ -197,13 +197,13 @@ document
       if (span.classList.contains('notShow')) {
         span.classList.remove('notShow')
         span.classList.add('show')
-        document.getElementById('showTimeButton').innerText =
-          'Hide todo due time'
+        document.getElementById('showTimeButton').innerText = 'Hide due date'
+        dateIsShown = true
       } else {
         span.classList.add('notShow')
         span.classList.remove('show')
-        document.getElementById('showTimeButton').innerText =
-          'Show todo due time'
+        document.getElementById('showTimeButton').innerText = 'Show due date'
+        dateIsShown = false
       }
     }
   })
@@ -237,16 +237,18 @@ document
   .addEventListener('click', function (e) {
     let buttonLabel = document.getElementById('sortTodoByTime').innerText
 
-    if (buttonLabel == 'Sort todo by time') {
+    //sort according to due date
+    if (buttonLabel == 'Sort by due date') {
+      document.getElementById('sortTodoByTime').innerText = 'Show original list'
       defaultTodos.sort(function (a, b) {
         return new Date(a.shouldBeDoneBy) - new Date(b.shouldBeDoneBy)
       })
-      document.getElementById('sortTodoByTime').innerText = 'Show original list'
     } else {
+      //sort according to todo createing date
       defaultTodos.sort(function (a, b) {
         return new Date(a.created) - new Date(b.created)
       })
-      document.getElementById('sortTodoByTime').innerText = 'Sort todo by time'
+      document.getElementById('sortTodoByTime').innerText = 'Sort by due date'
     }
 
     defaultTodosAsHtml = defaultTodos.map(todo => {
@@ -256,6 +258,21 @@ document
     htmlString = defaultTodosAsHtml.join('')
     todoList = document.getElementById('todoSection')
     todoList.innerHTML = htmlString
+
+    //show/hide due date
+    const todoCreatedSpan = document.getElementsByClassName(
+      'shouldBeDoneTimeSpan'
+    )
+
+    if (dateIsShown) {
+      for (span of todoCreatedSpan) {
+        span.classList.add('show')
+
+        if (span.classList.contains('notShow')) {
+          span.classList.remove('notShow')
+        }
+      }
+    }
   })
 
 function pad_2 (number) {

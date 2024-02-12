@@ -1,0 +1,5 @@
+{
+  "prettier.useEditorConfig": false,
+  "prettier.printWidth": 350,
+  "editor.defaultFormatter": null
+}
